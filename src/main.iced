@@ -13,7 +13,9 @@ class Sane extends Base
 		@sep = pathmod.sep
 	split : (x) -> x.split @sep
 	join :  (v...) -> v.join @sep
-	home : (opts = {}) -> process.env.HOME
+	home : (opts = {}) -> 
+		ret = process.env.HOME
+		if opts.array then @split(ret) else ret
 	normalize : (p) -> p
 
 #================
