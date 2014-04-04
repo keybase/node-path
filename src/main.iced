@@ -14,6 +14,7 @@ class Sane extends Base
 	split : (x) -> x.split @sep
 	join :  (v) -> v.join @sep
 	home : (opts = {}) -> process.env.HOME
+	normalize : (p) -> p
 
 #================
 
@@ -25,6 +26,7 @@ class Insane extends Base
 
 	split : (x) -> x.split /[/\\]/ 
 	join : (v) -> v.join '/'
+	normalize : (p) -> @join @split p
 
 	home : (opts = {}) ->
 		ret = null
