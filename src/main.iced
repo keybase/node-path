@@ -27,7 +27,7 @@ lst = (v) -> v[-1...][0]
 class Insane extends Base
 
 	split : (x) -> x.split /[/\\]/ 
-	join : (v...) -> v.join '/'
+	join : (v...) -> v.join pathmod.sep
 	normalize : (p) -> @join @split p
 
 	home : (opts = {}) ->
