@@ -45,7 +45,7 @@ class Insane extends Base
 
 _eng = if process.platform is 'win32' then (new Insane()) else (new Sane())
 
-for sym in [ 'split', 'join', 'home' ]
+for sym in [ 'split', 'join', 'home', 'normalize' ]
 	exports[sym] = _eng[sym].bind(_eng)
 
 #================
