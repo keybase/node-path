@@ -12,7 +12,7 @@ class Sane extends Base
 	constructor : () ->
 		@sep = pathmod.sep
 	split : (x) -> x.split @sep
-	join :  (v) -> v.join @sep
+	join :  (v...) -> v.join @sep
 	home : (opts = {}) -> process.env.HOME
 	normalize : (p) -> p
 
@@ -25,7 +25,7 @@ lst = (v) -> v[-1...][0]
 class Insane extends Base
 
 	split : (x) -> x.split /[/\\]/ 
-	join : (v) -> v.join '/'
+	join : (v...) -> v.join '/'
 	normalize : (p) -> @join @split p
 
 	home : (opts = {}) ->
@@ -37,7 +37,7 @@ class Insane extends Base
 			if lst(p).toLowerCase() is "local" and not opts.local
 				p.pop()
 				p.push "Roaming"
-			ret = @join(p)
+			ret = if opts.array then p else @join(p...)
 		if err? then throw err
 		return ret
 
