@@ -7,8 +7,8 @@ function sane_os_home() {
 
 function insane_os_home() {
 	var e = process.env.TEMP;
-	if (typeof x !== "undefined" && x !== null) {
-		var p = path.split(e);
+	if (typeof e !== "undefined" && e !== null) {
+		var p = e.split(path.sep);
 
 		if (p.length === 0) {
 			throw new Error("Malformed temporary path");
@@ -24,7 +24,7 @@ function insane_os_home() {
 		if (p[p.length - 1].toLowerCase() === "local") {
 			p.push("Roaming");	
 		}
-		return p.join(path.sep);
+		return path.join(p);
 	} else {
 		throw new Error("Can't get a temporary directory via env.TEMP");
 	}
