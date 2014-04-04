@@ -1,0 +1,23 @@
+{
+  "name": "keybase-home",
+  "version": "0.0.0",
+  "description": "Getting home can be hard; this module does it",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/keybase/node-home"
+  },
+  "keywords": [
+    "keybase",
+    "home"
+  ],
+  "author": "Maxwell Krohn",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/keybase/node-home/issues"
+  },
+  "homepage": "https://github.com/keybase/node-home"
+}
