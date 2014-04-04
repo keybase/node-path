@@ -12,7 +12,7 @@ class Sane extends Base
 	constructor : () ->
 		@sep = pathmod.sep
 	split : (x) -> x.split @sep
-	join :  (v...) -> v.join @sep
+	join :  (v...) -> pathmod.join v...
 	home : (opts = {}) -> 
 		ret = process.env.HOME
 		if opts.array then @split(ret) else ret
@@ -27,7 +27,7 @@ lst = (v) -> v[-1...][0]
 class Insane extends Base
 
 	split : (x) -> x.split /[/\\]/ 
-	join : (v...) -> v.join pathmod.sep
+	join : (v...) -> pathmod.join v...
 	normalize : (p) -> @join @split p
 
 	home : (opts = {}) ->
