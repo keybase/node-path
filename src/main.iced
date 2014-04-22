@@ -62,11 +62,10 @@ class Win32 extends Base
 
   #-------
 
-  config : (name = null) -> 
-    dirs = @home()
-    if name?
-      dirs.push name
-    @join dirs...
+  config_dir : (name = null) -> 
+    home = @home() 
+    if name? then @join(home, name)
+    else home
 
   #-------
 
