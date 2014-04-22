@@ -12,6 +12,11 @@ class Base
     pathmod.join v...
   join : (v...) -> pathmod.join v...
 
+  #----------------
+
+  cache_dir : (name = null) -> @config_dir(name)
+  data_dir : (name = null) -> @config_dir(name)
+
 #================
 
 class Posix extends Base
@@ -34,6 +39,14 @@ class Linux extends Posix
 
   config_dir : (name = null) -> 
     prfx = process.env.XDG_CONFIG_HOME or @join(@home(), ".config")
+    if name? then @join(prfx, name) else prfx
+
+  cache_dir : (name = null) ->
+    prfx = process.env.XDG_CACHE_HOME or @join(@home(), ".cache")
+    if name? then @join(prfx, name) else prfx
+
+  data_dir : (name = null) ->
+    prfx = process.env.XDG_DATA_HOME or @join(@home(), ".local", "share")
     if name? then @join(prfx, name) else prfx
 
 #================
@@ -93,7 +106,7 @@ _eng = switch process.platform
 
 #================
 
-for sym in [ 'split', 'unsplit', 'home', 'normalize', 'join', 'config_dir' ]
+for sym in [ 'split', 'unsplit', 'home', 'normalize', 'join', 'config_dir', 'data_dir', 'cache_dir' ]
   exports[sym] = _eng[sym].bind(_eng)
 
 #================
