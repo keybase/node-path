@@ -14,7 +14,7 @@ class Base
 
 #================
 
-class Sane extends Base
+class Posix extends Base
   constructor : () ->
     @sep = pathmod.sep
   split : (x) -> x.split @sep
@@ -22,6 +22,32 @@ class Sane extends Base
     ret = process.env.HOME
     if opts.array then @split(ret) else ret
   normalize : (p) -> p
+  config_dir : (name = null) ->
+    dirs = @home()
+    if name?
+      dirs.push("." + name)
+    @join dirs...
+
+#================
+
+class Linux extends Posix
+
+  config_dir : (name = null) -> 
+    prfx = process.env.XDG_CONFIG_HOME or @join(@home(), ".config")
+    if name? then @join(prfx, name) else prfx
+
+#================
+
+uc1 = (p) -> p[0].toUpperCase() + p[1...]
+
+#================
+
+class Darwin extends Posix 
+
+  config_dir : (name = null) ->
+    path = [ @home(), "Library", "Application Support" ]
+    if name? then path.push uc1(name)
+    @join path...
 
 #================
 
@@ -29,10 +55,20 @@ lst = (v) -> v[-1...][0]
 
 #================
 
-class Insane extends Base
+class Win32 extends Base
 
   split : (x) -> x.split /[/\\]/ 
   normalize : (p) -> @join @unsplit p
+
+  #-------
+
+  config : (name = null) -> 
+    dirs = @home()
+    if name?
+      dirs.push name
+    @join dirs...
+
+  #-------
 
   home : (opts = {}) ->
     ret = null
@@ -50,9 +86,15 @@ class Insane extends Base
 
 #================
 
-_eng = if process.platform is 'win32' then (new Insane()) else (new Sane())
+_eng = switch process.platform
+  when 'win32' then new Win32()
+  when 'linux' then new Linux()
+  when 'darwin' then new Darwin()
+  else new Posix()
 
-for sym in [ 'split', 'unsplit', 'home', 'normalize', 'join' ]
+#================
+
+for sym in [ 'split', 'unsplit', 'home', 'normalize', 'join', 'config_dir' ]
   exports[sym] = _eng[sym].bind(_eng)
 
 #================
