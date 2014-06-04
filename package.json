@@ -20,7 +20,7 @@
     "url": "https://github.com/keybase/node-home/issues"
   },
   "homepage": "https://github.com/keybase/node-home",
-  "dependencies": {
-    "iced-coffee-script": "~1.7.1-b"
+  "devDependencies" : {
+    "iced-runtime": "0.0.1"
   }
 }
