@@ -4,7 +4,7 @@ pathmod = require 'path'
 #================
 
 class Base
-  constructor : () ->
+  constructor : (@hooks) ->
   unsplit : (v) -> 
     if v.length and v[0].length is 0
       v = v[0...]
@@ -24,11 +24,11 @@ class Posix extends Base
     @sep = pathmod.sep
   split : (x) -> x.split @sep
   home : (opts = {}) -> 
-    ret = process.env.HOME
+    ret = if (f = @hooks?.get_home)? then f() else process.env.HOME
     if opts.array then @split(ret) else ret
   normalize : (p) -> p
   config_dir : (name = null) ->
-    dirs = @home()
+    dirs = @home { array : true }
     if name?
       dirs.push("." + name)
     @join dirs...
@@ -98,11 +98,19 @@ class Win32 extends Base
 
 #================
 
-_eng = switch process.platform
-  when 'win32' then new Win32()
-  when 'linux' then new Linux()
-  when 'darwin' then new Darwin()
-  else new Posix()
+_klass = switch process.platform
+  when 'win32' then Win32
+  when 'linux' then Linux
+  when 'darwin' then Darwin
+  else Posix
+
+#================
+
+_eng = new _klass()
+
+#================
+
+exports.new_eng = (args) -> new _klass args 
 
 #================
 
