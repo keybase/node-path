@@ -39,7 +39,7 @@ class Posix extends Base
     dirs = @home { array : true }
     if (name = @get_name name)?
       dirs.push("." + name)
-    @join dirs...
+    @unsplit dirs
 
 #================
 
