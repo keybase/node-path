@@ -68,12 +68,6 @@ uc1 = (p) -> p[0].toUpperCase() + p[1...]
 
 class Darwin extends Posix
 
-  config_dir : (name = null) ->
-    path = [ @home(), "Library", "Application Support" ]
-    name = @get_name name
-    if name? then path.push uc1(name)
-    @join path...
-
 #================
 
 lst = (v) -> v[-1...][0]
