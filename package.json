@@ -1,6 +1,6 @@
 {
   "name": "keybase-path",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "Getting home can be hard; this module does it on Mac/Win/Linux",
   "main": "lib/main.js",
   "scripts": {
