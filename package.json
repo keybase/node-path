@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/keybase/node-home",
   "devDependencies": {
-    "iced-coffee-script": "^1.7.1-f"
+    "iced-coffee-script": "^1.8.0-d"
   },
   "dependencies": {
     "iced-runtime": "^1.0.1"
